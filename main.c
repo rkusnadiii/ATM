@@ -35,10 +35,11 @@ void menu();
 /* main program */
 int main()
 {
-    FILE* fp = fopen("Deposit.txt", "w");
-    FILE* fp = fopen("Withdraw.txt", "w");
-    FILE* fp = fopen("Info.txt", "w");
-    FILE* fp = fopen("Create.txt", "w");
+    FILE* fp;
+    fp = fopen("Deposit.txt", "w");
+    fp = fopen("Withdraw.txt", "w");
+    fp = fopen("Info.txt", "w");
+    fp = fopen("Create.txt", "w");
     MYSQL* handle = NULL;
     MYSQL_ROW row;
     handle = mysql_init(handle);
