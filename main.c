@@ -115,13 +115,13 @@ void display_options()
 
 void Create_new_account()
 {
-    char username[20];
+    char username;
     int password;
-    char nama[30];
+    char nama;
     int norek;
     char alamat;
-    char telp[20];
-    char kota[20];
+    char telp;
+    char kota;
     int saldo;
     printf("\nEnter the bank username           : ");
     scanf("%s", &username);
@@ -139,15 +139,15 @@ void Create_new_account()
     scanf("%d", &saldo);
     printf("\nEnter the account holder address  : ");
     scanf("%s", &alamat);
+    FILE* fp = fopen("Create.txt", "a");
+    fprintf(fp, "username:%s\nPassword:******\nNama:%s\nAlamat;%s %s\n Norek:%d\n Notelp:%s\n Jumlah setoran:%d", username, nama, alamat, kota, norek, telp, saldo);
+    fclose(fp);
     MYSQL* handle = NULL;
     handle = mysql_init(handle);
     mysql_real_connect(handle, "localhost", "root", "123456", "bank", 3306, NULL, 0);
     mysql_query(handle, "SELECT * FROM databank");
     mysql_query(handle, "INSERT INTO * databank VALUES(%s,%d,%s,%s,%s,%s,%d,%d)", username, password, nama, alamat, kota, telp, norek, saldo);
     printf("SUCSESS!!!");
-    FILE* fp = fopen("Create.txt", "a");
-    fprintf(fp, "username:%s\nPassword:******\nNama:%s\nAlamat;%s %s\n Norek:%d\n Notelp:%s\n Jumlah setoran:%d", username, nama, alamat, kota, norek, telp, saldo);
-    fclose(fp);
     _getch();
 }
 
@@ -202,11 +202,11 @@ void Cash_Deposit(char* data)
         printf("Deposit:");
         scanf("%d", &jml);
         printf("Completed!!\nDeposit:%d", jml);
+        FILE* fp = fopen("Deposit.txt", "a");
+        fprintf(fp, "Deposit Sukses\nDeposit:%d", jml);
         a = jml = row[7];
         mysql_query(handle, "SELECT * FROM  databank");
         mysql_query(handle, "INSERT INTO * databank VALUES(%s,%d,%s,%s,%s,%s,%d,%d)",row[0],row[1],row[2],row[3],row[4],row[5],row[6],a);
-        FILE* fp = fopen("Deposit.txt", "a");
-        fprintf(fp, "Deposit Sukses\nDeposit:%d",jml);
         fclose(fp);
         _getch();
     }
@@ -236,12 +236,12 @@ void Cash_withdrawl(char* data)
         scanf("%d", &inp);
         if (inp < row[7]) {
             printf("Sucsess!!!");
-            a = row[7] - inp;
-            mysql_query(handle, "SELECT * FROM  databank");
-            mysql_query(handle, "INSERT INTO * databank VALUES(%s,%d,%s,%s,%s,%s,%d,%d)", row[0], row[1], row[2], row[3], row[4], row[5], row[6], a);
             FILE* fp = fopen("Withdraw.txt", "a");
             fprintf(fp, "Penarikan Sukses\nDitarik:%d", inp);
             fclose(fp);
+            a = row[7] - inp;
+            mysql_query(handle, "SELECT * FROM  databank");
+            mysql_query(handle, "INSERT INTO * databank VALUES(%s,%d,%s,%s,%s,%s,%d,%d)", row[0], row[1], row[2], row[3], row[4], row[5], row[6], a);
             _getch();
         }
         else {
