@@ -1,0 +1,54 @@
+Ricky 1806199921
+Dio Fajrie 1806200324
+Kelompok 11
+
+Proyek ATM
+
+APLIKASI BANK dengan C api MYSQL
+Berisi library sbb:
+#include <mysql.h>
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <windows.h>
+
+Disini pertama kita melakukan login dengan mencocokan username dan password yang sudah ada pada my sql
+Disini isan password kita buat menjadi * dengan cara
+while(1){
+      int x=_getch();
+      if(x==13) break;
+      else if(x==8&&loop>0){
+        printf("\b \b");
+        nama[loop]=0;
+        loop--;
+      }
+      else{
+        printf("*");
+        nama[loop]=x;
+        loop++;
+      }
+    }
+
+Lalu untuk mencocokan data kita konek terlebih dahulu ke MYSQL
+MYSQL* handle = NULL;
+    MYSQL_ROW row;
+    handle = mysql_init(handle);
+    mysql_real_connect(handle, "localhost", "root", "123456", "bank", 3306, NULL, 0);
+lalu kita panggil data dengan cara
+ mysql_query(handle, "SELECT * FROM  databank");
+    MYSQL_RES* item = mysql_store_result(handle);
+    row = mysql_fetch_row(item);
+row tersebut merupakan data pada sql dan untuk memanggil datanya kita cukup menulis row dengan array
+contoh
+row[0] 
+untuk mencocokan kita menggunakan strcmp
+
+disini proses yang dapat dilakukan baru terdapat
+buat akun baru
+deposit saldo
+menarik saldo
+dan informasi akun
+selanjutnya kita akan membuat menu transfer 
+
+error:saat export data ke mysql data tidak terexport sehingga data pada sql tetap (tidak berubah)
